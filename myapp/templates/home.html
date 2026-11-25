@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+</body>
+</html>
+
+    <h1>Welcome To Scope India</h1>
+    <img src="{% static 'img/a2.jpg' %}" alt="">
+    <a href="{% url 'product' %}">Product</a>
+
+
+    <a href="{% url 'about' %}"> Go to about page</a>
+    <a href="{% url 'contact' %}"> Go to contact page</a>
+    <a href="{% url 'register' %}"> Go to register page</a>
+    <a href="{% url 'dashboard' %}"> Go to dashboard page</a>
+
+</body>
+</html>
+
+{% endblock %}

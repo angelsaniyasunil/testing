@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    table,tr,th,td{
+        border: 2px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<body>
+    <h1>Welcome to Dashboard</h1>
+    <!-- {% if data %}
+        {% for i in data %}
+            <h1>{{ i }}</h1>  
+         {% endfor %}
+    {% endif %} -->
+    <table>
+        <tr>
+            <th>Profile Image</th>
+            <th>Full Name</th>
+            <th>Username</th>
+            <th>Phone Number</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Email</th>
+        </tr>
+        {% if mydata %}
+            {% for i in mydata %}
+        <tr>
+            <td><img src="{{ i.profile.url }}" alt="image"></td>
+            <td>{{ i.full_name }}</td>
+            <td>{{ i.username }}</td>
+            <td>{{ i.number}}</td>
+            <td>{{ i.gender }}</td>
+            <td>{{ i.dob }}</td>
+            <td>{{ i.email }}</td>
+        </tr>
+            {% endfor %}
+        {% endif %}
+
+
+    </table>
+
+</body>
+</html>
