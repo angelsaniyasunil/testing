@@ -27,17 +27,22 @@
             <th>Gender</th>
             <th>DOB</th>
             <th>Email</th>
+            <th>Update</th>
+            <th>Delete</th>
         </tr>
         {% if mydata %}
             {% for i in mydata %}
         <tr>
-            <td><img src="{{ i.profile.url }}" alt="image"></td>
+            <td><img src="{{ i.profile.url }}" alt="profile" width="80" height="80"></td>
             <td>{{ i.full_name }}</td>
             <td>{{ i.username }}</td>
             <td>{{ i.number}}</td>
             <td>{{ i.gender }}</td>
             <td>{{ i.dob }}</td>
             <td>{{ i.email }}</td>
+            <td><a href="{% url 'update' i.id %}">update</a></td>
+            <td><a href="">Delete</a></td>
+            
         </tr>
             {% endfor %}
         {% endif %}

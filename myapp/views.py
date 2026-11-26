@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404
-from . models import RegisterModel,Student
+from . models import RegisterModel
+from . models import Student
 from . models import ProductModel
 from . forms import ProductAddingForm,RegisterViewForm
 
@@ -27,29 +28,11 @@ def product(request):
     return render(request, "product.html")
 
 def register(request):
-    if request.method == "FILES":
-        image = request.POST.get("profile")
-        full_name = request.POST.get("full_name")
-        username = request.POST.get("username")
-        number = request.POST.get("number")
-        gender = request.POST.get("gender")
-        dob = request.POST.get("dob")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-        confirm_password = request.POST.get("confirm_password")
-
-        mydata = RegisterModel(
-            profile = image,
-            full_name = full_name,
-            username = username,
-            number = number,
-            gender = gender,
-            dob = dob,
-            email = email,
-            password = password
-        )
-        mydata.save()
-        print("saved")
+    if request.method == "POST":
+            form = RegisterViewForm(request.POST,request.FILES)
+            if form.is_valid():
+                form.save()
+                print("saved")
 
     return render(request, "register.html")
 
@@ -57,6 +40,21 @@ def dashboard(request):
     values = [1,2,3,4,5,6,7,8,9,10]
     mydata = RegisterModel.objects.all()
     return render(request, "dashboard.html", {"data":values, "mydata":mydata})
+
+def update(request,pk):
+    data = RegisterModel.objects.get(id=pk)
+    if request.method == "POST":
+        data.profile = request.FILES.get("profile")
+        data.full_name = request.POST.get("full_name")
+        data.username = request.POST.get("username")
+        data.number = request.POST.get("number")
+        data.gender = request.POST.get("gender")
+        data.dob = request.POST.get("dob")
+        data.email = request.POST.get("email")
+        data.password = request.POST.get("password")
+        data.save()
+        print("saved")
+    return render(request, "update.html", {"data":data})
 
 def login_view(request):
     if request.method == "POST":
@@ -79,24 +77,24 @@ def product(request):
         return render(request,"product.html")
 
 
-def register_view(request):
-    if request.method == "POST":
-        form = RegisterViewForm(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-            print("saved")
+# def register_view(request):
+#     if request.method == "POST":
+#         form = RegisterViewForm(request.POST,request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             print("saved")
 
                 
-            subject = "Registration Successful"
-            message = f"""
-                    Hello{form.full_name}
-                    Your registration has been completed successfully,
+            # subject = "Registration Successful"
+            # message = f"""
+            #         Hello{form.full_name}
+            #         Your registration has been completed successfully,
 
-                    Thankyou,
-                    """
-            send_mail(subject,messsage,
-                        settings.DEFAULT_FROM_EMAIL,form.email,fail_silently=False)
-            messages.success(request,"Registration Successful")
+            #         Thankyou,
+            #         """
+            # send_mail(subject,message,
+            #             settings.DEFAULT_FROM_EMAIL,form.email,fail_silently=False)
+            # messages.success(request,"Registration Successful")
 
     else:
         form = RegisterViewForm()
@@ -105,9 +103,9 @@ def register_view(request):
 
 
 
-def update_list(request,jk):
-    form = RegisterModel.objects.get(id = jk)
-    return render(request,"update_list.html",{"data":form})
+# def update_list(request,jk):
+#     form = RegisterModel.objects.get(id = jk)
+#     return render(request,"update_list.html",{"data":form})
 
 # def update_list(request, jk):
 #     user = get_object_or_404(RegisterModel, id=jk)
